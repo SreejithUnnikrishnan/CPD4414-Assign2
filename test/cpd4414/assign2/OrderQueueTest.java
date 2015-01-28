@@ -117,4 +117,23 @@ public class OrderQueueTest {
         
     }
     
+    @Test
+    public void testWhenOrdersAvailableThenReturnOrderWithEarliestTimeReceived(){
+        try {
+            OrderQueue orderQueue = new OrderQueue();
+            Order order;
+            order = new Order("CUST00001", "ABC Construction");
+            order.addPurchase(new Purchase("PROD0004", 450));
+            orderQueue.add(order);
+            order = new Order("CUST00002", "JJ Construction");
+            order.addPurchase(new Purchase("PROD0006", 250));
+            orderQueue.add(order);
+            
+            order= orderQueue.next();
+            assertNotNull(order);
+        } catch (Exception ex) {
+            System.out.println("Exception: " +ex.getMessage());
+        }
+    }
+    
 }
