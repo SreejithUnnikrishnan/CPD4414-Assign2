@@ -43,4 +43,14 @@ public class OrderQueue {
     public Order next(){
         return orderQueue.peek();
     }
+    
+    public void process() throws Exception{
+        Order order =  orderQueue.remove();
+        if(order.getTimeReceived().equals(null)){
+            throw new NoTimeReceivedException();
+        }
+        else{
+            order.setTimeProcessed(new Date());
+        }
+    }
 }

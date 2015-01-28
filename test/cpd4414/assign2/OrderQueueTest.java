@@ -141,4 +141,30 @@ public class OrderQueueTest {
         
     }
     
+    @Test
+    public void testWhenOrderDoesNotHaveTimeReceivedThenThrowException(){
+        boolean check = false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order1 = new Order("CUST00001", "ABC Construction");
+        order1.addPurchase(new Purchase("PROD0004", 450));
+        try {
+            orderQueue.add(order1);
+            //order1.setTimeReceived(null);
+        } catch (Exception ex) {
+            System.out.println("Exception in adding order: " +ex.getMessage());
+        }
+        
+        try {
+            orderQueue.process();
+        } 
+        catch (NoTimeReceivedException ex){
+            check = true;
+            System.out.println("NO Time exception: " +ex.getMessage());
+        }
+        catch (Exception ex) {
+            System.out.println("Some Other exception: " +ex.getMessage());
+        }
+        assertTrue(check);
+    }
+    
 }
