@@ -121,19 +121,21 @@ public class OrderQueueTest {
     public void testWhenOrdersAvailableThenReturnOrderWithEarliestTimeReceived(){
         try {
             OrderQueue orderQueue = new OrderQueue();
-            Order order;
-            order = new Order("CUST00001", "ABC Construction");
-            order.addPurchase(new Purchase("PROD0004", 450));
-            orderQueue.add(order);
-            order = new Order("CUST00002", "JJ Construction");
-            order.addPurchase(new Purchase("PROD0006", 250));
-            orderQueue.add(order);
             
-            order= orderQueue.next();
-            assertNotNull(order);
+            Order order1 = new Order("CUST00001", "ABC Construction");
+            order1.addPurchase(new Purchase("PROD0004", 450));
+            orderQueue.add(order1);
+            Order order2 = new Order("CUST00002", "JJ Construction");
+            order2.addPurchase(new Purchase("PROD0006", 250));
+            orderQueue.add(order2);
+            
+            Order order3 = orderQueue.next();
+            assertEquals(order3, order1);
         } catch (Exception ex) {
             System.out.println("Exception: " +ex.getMessage());
         }
     }
+    
+    
     
 }
