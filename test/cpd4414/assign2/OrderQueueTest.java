@@ -136,6 +136,9 @@ public class OrderQueueTest {
         }
     }
     
-    
+    @Test
+    public void testWhenOrderHasTimeReceivedAndAllOfPurchasesAreInStock(){
+        
+    }
     
 }
