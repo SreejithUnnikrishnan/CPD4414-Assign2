@@ -208,6 +208,28 @@ public class OrderQueueTest {
         assertTrue(check);
     }
     
+    @Test
+    public void testWhenOrderDoesNotHaveTimeReceivedForFulFillThenThrowException(){
+        boolean check = false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0002", 10));
+        
+        try {
+            orderQueue.add(order);
+            orderQueue.process();
+            orderQueue.fulfill();
+        } 
+        catch(NoTimeReceivedException ex){
+            check = true;
+        }
+        catch(Exception ex){
+            System.out.println("Some Other Exception: " +ex.getMessage());
+        }
+        
+        assertTrue(check);
+    }
+    
     
     
 }
