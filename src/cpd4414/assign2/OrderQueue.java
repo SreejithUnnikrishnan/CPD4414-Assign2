@@ -49,6 +49,7 @@ public class OrderQueue {
     
     public void process() throws Exception{
         Order order =  orderQueue.remove();
+        
         if(order.getTimeReceived().equals(null)){
             throw new NoTimeReceivedException();
         }
@@ -58,7 +59,17 @@ public class OrderQueue {
         }
     }
     
-    public void fulfill(){
+    public void fulfill() throws Exception{
+        Order order = orderList.remove(0);
+        if(order.getTimeReceived().equals(null)){
+            throw new NoTimeReceivedException(); 
+        }
+        else if(order.getTimeProcessed().equals(null)){
+            throw new NoTimeProcessedException();
+        }
+        else{
+            order.setTimeFulfilled(new Date());
+        }
         
     }
 }

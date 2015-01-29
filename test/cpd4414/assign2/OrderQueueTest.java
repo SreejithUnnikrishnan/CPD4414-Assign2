@@ -58,8 +58,8 @@ public class OrderQueueTest {
     public void testWhenCustomerExistsAndPurchasesExistThenTimeReceivedIsNow() {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        order.addPurchase(new Purchase("PROD0004", 450));
-        order.addPurchase(new Purchase("PROD0006", 250));
+        order.addPurchase(new Purchase("PROD0004", 50));
+        order.addPurchase(new Purchase("PROD0006", 40));
         try {
             orderQueue.add(order);
         } catch (Exception ex) {
@@ -76,8 +76,8 @@ public class OrderQueueTest {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("", "");
-        order.addPurchase(new Purchase("PROD0004", 450));
-        order.addPurchase(new Purchase("PROD0006", 250));
+        order.addPurchase(new Purchase("PROD0004", 10));
+        order.addPurchase(new Purchase("PROD0006", 20));
         try{
             orderQueue.add(order);
         }
@@ -123,10 +123,10 @@ public class OrderQueueTest {
             OrderQueue orderQueue = new OrderQueue();
             
             Order order1 = new Order("CUST00001", "ABC Construction");
-            order1.addPurchase(new Purchase("PROD0004", 450));
+            order1.addPurchase(new Purchase("PROD0004", 50));
             orderQueue.add(order1);
             Order order2 = new Order("CUST00002", "JJ Construction");
-            order2.addPurchase(new Purchase("PROD0006", 250));
+            order2.addPurchase(new Purchase("PROD0006", 20));
             orderQueue.add(order2);
             
             Order order3 = orderQueue.next();
@@ -140,8 +140,8 @@ public class OrderQueueTest {
     public void testWhenOrderHasTimeReceivedAndAllOfPurchasesAreInStock(){
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        order.addPurchase(new Purchase("PROD0004", 450));
-        order.addPurchase(new Purchase("PROD0006", 250));
+        order.addPurchase(new Purchase("PROD0002", 50));
+        order.addPurchase(new Purchase("PROD0006", 20));
         try {
             orderQueue.add(order);
             orderQueue.process();
@@ -160,7 +160,7 @@ public class OrderQueueTest {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order1 = new Order("CUST00001", "ABC Construction");
-        order1.addPurchase(new Purchase("PROD0004", 450));
+        order1.addPurchase(new Purchase("PROD0004", 40));
         try {
             orderQueue.add(order1);
             //order1.setTimeReceived(null);
@@ -180,5 +180,34 @@ public class OrderQueueTest {
         }
         assertTrue(check);
     }
+    
+    @Test
+    public void testWhenOrderHasTimeProcessedTimeReceivedAndAllOfPurchasesInStockThenSetTimeFulfilled(){
+        
+    }
+    
+    @Test
+    public void testWhenOrderDoesNotHaveTimeProcessedThenThrowException(){
+        boolean check = false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0004", 10));
+        order.addPurchase(new Purchase("PROD0006", 30));
+        try {
+            orderQueue.add(order);
+            orderQueue.process();
+            orderQueue.fulfill();
+        } 
+        catch(NoTimeProcessedException ex){
+            check = true;
+        }
+        catch(Exception ex){
+            System.out.println("Some Other Exception: " +ex.getMessage());
+        }
+        
+        assertTrue(check);
+    }
+    
+    
     
 }
