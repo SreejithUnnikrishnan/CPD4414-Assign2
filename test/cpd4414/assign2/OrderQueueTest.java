@@ -138,7 +138,21 @@ public class OrderQueueTest {
     
     @Test
     public void testWhenOrderHasTimeReceivedAndAllOfPurchasesAreInStock(){
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0004", 450));
+        order.addPurchase(new Purchase("PROD0006", 250));
+        try {
+            orderQueue.add(order);
+            orderQueue.process();
+        } 
         
+        catch (Exception ex) {
+            System.out.println("Some Other exception: " +ex.getMessage());
+        }  
+        long expResult = new Date().getTime();
+        long result = order.getTimeProcessed().getTime();
+        assertTrue(Math.abs(result - expResult) < 1000);
     }
     
     @Test
