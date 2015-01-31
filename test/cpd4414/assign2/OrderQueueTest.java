@@ -259,18 +259,41 @@ public class OrderQueueTest {
     public void testWhenThereAreOrdersThenReturnJSONObject(){
             String expected = "{ \"orders\" : [\n" +
                               " { \"customerId\" : \"CUST00001\",\n" +
-                              " \"customerName\" : \"ABC Construction\",\n" +
-                              " \"timeReceived\" : " +new Date().getTime()+",\n" +
-                                " \"timeProcessed\" : " +new Date().getTime()+",\n" +
-                                " \"timeFulfilled\" : " +new Date().getTime()+",\n" +
+                                " \"customerName\" : \"ABC Construction\",\n" +
+                                " \"timeReceived\" : " +new Date().getTime()+ " ,\n" +
+                                " \"timeProcessed\" : " +new Date().getTime()+ " ,\n" +
+                                " \"timeFulfilled\" : " +new Date().getTime()+ " ,\n" +
                                 " \"purchases\" : [\n" +
                                 " { \"productId\" : \"PROD0004\", \"quantity\" : 10 }\n" +
-                                " ],\n" +
+                                " ] \n" +
+                                " },\n" +
+                                " { \"customerId\" : \"CUST00002\",\n" +
+                                " \"customerName\" : \"JJ Construction\",\n" +
+                                " \"timeReceived\" : " +new Date().getTime()+ " ,\n" +
+                                " \"timeProcessed\" : \"\",\n" +
+                                " \"timeFulfilled\" : \"\",\n" +
+                                " \"purchases\" : [\n" +
+                                " { \"productId\" : \"PROD0003\", \"quantity\" : 20 },\n" +
+                                " { \"productId\" : \"PROD0002\", \"quantity\" : 10 }\n" +
+                                " ]\n" +
+                                " }\n" +
                                 "] }";
             String result = "";
             OrderQueue orderQueue = new OrderQueue();
-            Order order = new Order("CUST00001", "ABC Construction");
-            order.addPurchase(new Purchase("PROD0004", 10));
+            Order order1 = new Order("CUST00001", "ABC Construction");
+            order1.addPurchase(new Purchase("PROD0004", 10));
+            Order order2 = new Order("CUST00002", "JJ Construction");
+            order2.addPurchase(new Purchase("PROD0003", 20));
+            order2.addPurchase(new Purchase("PROD0004", 10));
+            try {
+                orderQueue.add(order1);
+                orderQueue.process();
+                orderQueue.fulfill();
+                orderQueue.add(order2);
+            } 
+            catch(Exception ex){
+                System.out.println("Exception: " +ex.getMessage());
+            }
             result = orderQueue.report();
             assertEquals(expected, result);
         
