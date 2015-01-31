@@ -53,9 +53,13 @@ public class OrderQueue {
     
     public void process() throws Exception{
         Order order =  orderQueue.remove();
+        Inventory in = new Inventory();
         
         if(order.getTimeReceived().equals(null)){
             throw new NoTimeReceivedException();
+        }
+        if(in.getQuantityForId(order.getListOfPurchases().get(0).getProductId()) == 0){
+            throw new NoQuantityLeftException();
         }
         else{
             order.setTimeProcessed(new Date());
