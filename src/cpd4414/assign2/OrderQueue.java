@@ -58,7 +58,7 @@ public class OrderQueue {
         if(order.getTimeReceived().equals(null)){
             throw new NoTimeReceivedException();
         }
-        if(in.getQuantityForId(order.getListOfPurchases().get(0).getProductId()) == 0){
+        else if(in.getQuantityForId(order.getListOfPurchases().get(0).getProductId()) == 0){
             throw new NoQuantityLeftException();
         }
         else{
@@ -69,12 +69,15 @@ public class OrderQueue {
     
     public void fulfill() throws Exception{
         Order order = orderList.remove(0);
-        
+        Inventory in = new Inventory();
         if(order.getTimeReceived().equals(null)){
             throw new NoTimeReceivedException(); 
         }
         else if(order.getTimeProcessed().equals(null)){
             throw new NoTimeProcessedException();
+        }
+        else if(in.getQuantityForId(order.getListOfPurchases().get(0).getProductId()) == 0){
+            throw new NoQuantityLeftException();
         }
         else{
             order.setTimeFulfilled(new Date());
