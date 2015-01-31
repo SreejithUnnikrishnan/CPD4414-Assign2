@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cpd4414.assign2;
 
 /**
@@ -14,5 +13,5 @@ class NoCustomerDetailsException extends Exception {
 
     public NoCustomerDetailsException() {
     }
-    
+
 }

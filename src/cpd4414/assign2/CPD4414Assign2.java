@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cpd4414.assign2;
 
 /**
@@ -28,5 +27,5 @@ public class CPD4414Assign2 {
     public static void main(String[] args) {
         // TODO code application logic here
     }
-    
+
 }
