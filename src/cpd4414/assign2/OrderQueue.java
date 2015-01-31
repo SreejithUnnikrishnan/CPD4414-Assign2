@@ -29,6 +29,7 @@ import java.util.Queue;
 public class OrderQueue {
     Queue<Order> orderQueue = new ArrayDeque<>();
     List<Order> orderList = new ArrayList<>();
+    List<Order> fulfillList = new ArrayList<>();
     
     public void add(Order order) throws Exception {
         if(order.getCustomerId().isEmpty() || order.getCustomerName().isEmpty() ){
@@ -69,14 +70,94 @@ public class OrderQueue {
         }
         else{
             order.setTimeFulfilled(new Date());
+            fulfillList.add(order);
         }
         
     }
     
     public String report(){
-        Order order;
+        String report = "";
         
-        return null;
+        if(!(fulfillList.isEmpty())){
+            Order order = fulfillList.get(0);
+            List<Purchase> listOfPurchases = order.getListOfPurchases();
+            report = "{ \"orders\" : [\n" +
+                              " { \"customerId\" : " +order.getCustomerId() + ",\n" +
+                                " \"customerName\" : " +order.getCustomerName() + ",\n" +
+                                " \"timeReceived\" : " +order.getTimeReceived()+ " ,\n" +
+                                " \"timeProcessed\" : \"\" ,\n" +
+                                " \"timeFulfilled\" : \"\" ,\n" +
+                                " \"purchases\" : [\n" +
+                                " { \"productId\" : " +listOfPurchases.get(0).getProductId() + ", \"quantity\" : " +listOfPurchases.get(0).getQuantity() + " }\n" +
+                                " ] \n" +
+                                " }";
+            
+        }
+        if(!(orderList.isEmpty())){
+            Order order = orderList.get(0);
+            List<Purchase> listOfPurchases = order.getListOfPurchases();
+            if(report.isEmpty()){
+                report = "{ \"orders\" : [\n" +
+                              " { \"customerId\" : " +order.getCustomerId() + ",\n" +
+                                " \"customerName\" : " +order.getCustomerName() + ",\n" +
+                                " \"timeReceived\" : " +order.getTimeReceived()+ " ,\n" +
+                                " \"timeProcessed\" : \"\" ,\n" +
+                                " \"timeFulfilled\" : \"\" ,\n" +
+                                " \"purchases\" : [\n" +
+                                " { \"productId\" : " +listOfPurchases.get(0).getProductId() + ", \"quantity\" : " +listOfPurchases.get(0).getQuantity() + " }\n" +
+                                " ] \n" +
+                                " }";
+             }
+             else{
+                 report = report + ",\n" +
+                                " { \"customerId\" : " +order.getCustomerId() + ",\n" +
+                                " \"customerName\" : " +order.getCustomerName() + ",\n" +
+                                " \"timeReceived\" : " +order.getTimeReceived()+ " ,\n" +
+                                " \"timeProcessed\" : \"\" ,\n" +
+                                " \"timeFulfilled\" : \"\" ,\n" +
+                                " \"purchases\" : [\n" +
+                                " { \"productId\" : " +listOfPurchases.get(0).getProductId() + ", \"quantity\" : " +listOfPurchases.get(0).getQuantity() + " }\n" +
+                                " ] \n" +
+                                " }";
+                 
+             }
+            
+        }
         
+        if(!(orderQueue.isEmpty())){
+            Order order = orderQueue.peek();
+             List<Purchase> listOfPurchases = order.getListOfPurchases();
+             if(report.isEmpty()){
+                report = "{ \"orders\" : [\n" +
+                              " { \"customerId\" : " +order.getCustomerId() + ",\n" +
+                                " \"customerName\" : " +order.getCustomerName() + ",\n" +
+                                " \"timeReceived\" : " +order.getTimeReceived()+ " ,\n" +
+                                " \"timeProcessed\" : \"\" ,\n" +
+                                " \"timeFulfilled\" : \"\" ,\n" +
+                                " \"purchases\" : [\n" +
+                                " { \"productId\" : " +listOfPurchases.get(0).getProductId() + ", \"quantity\" : " +listOfPurchases.get(0).getQuantity() + " }\n" +
+                                " ] \n" +
+                                " }";
+             }
+             else{
+                 report = report + ",\n" +
+                                " { \"customerId\" : " +order.getCustomerId() + ",\n" +
+                                " \"customerName\" : " +order.getCustomerName() + ",\n" +
+                                " \"timeReceived\" : " +order.getTimeReceived()+ " ,\n" +
+                                " \"timeProcessed\" : \"\" ,\n" +
+                                " \"timeFulfilled\" : \"\" ,\n" +
+                                " \"purchases\" : [\n" +
+                                " { \"productId\" : " +listOfPurchases.get(0).getProductId() + ", \"quantity\" : " +listOfPurchases.get(0).getQuantity() + " }\n" +
+                                " ] \n" +
+                                " }";
+                 
+             }
+            
+        }
+        
+            return report;
+        
+        
+               
     }
 }
