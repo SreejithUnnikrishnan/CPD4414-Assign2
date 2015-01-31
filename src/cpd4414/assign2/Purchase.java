@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cpd4414.assign2;
 
 /**
@@ -21,6 +20,7 @@ package cpd4414.assign2;
  * @author Len Payne <len.payne@lambtoncollege.ca>
  */
 public class Purchase {
+
     private int productId;
     private int quantity;
 
@@ -28,7 +28,7 @@ public class Purchase {
         this.productId = productId;
         this.quantity = quantity;
     }
-    
+
     public int getProductId() {
         return productId;
     }

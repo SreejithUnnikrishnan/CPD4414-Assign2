@@ -13,5 +13,5 @@ class NoTimeReceivedException extends Exception {
 
     public NoTimeReceivedException() {
     }
-    
+
 }

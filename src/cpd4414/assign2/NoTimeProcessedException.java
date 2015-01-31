@@ -13,5 +13,5 @@ class NoTimeProcessedException extends Exception {
 
     public NoTimeProcessedException() {
     }
-    
+
 }

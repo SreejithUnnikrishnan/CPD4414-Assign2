@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cpd4414.assign2;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import java.util.List;
  * @author Len Payne <len.payne@lambtoncollege.ca>
  */
 public class Order {
+
     private String customerId;
     private String customerName;
     private Date timeReceived;
@@ -32,12 +32,12 @@ public class Order {
     private Date timeFulfilled;
     private List<Purchase> listOfPurchases = new ArrayList<>();
     private String notes;
-    
+
     public Order(String customerId, String customerName) {
         this.customerId = customerId;
         this.customerName = customerName;
     }
-    
+
     public void addPurchase(Purchase p) {
         listOfPurchases.add(p);
     }
@@ -97,6 +97,5 @@ public class Order {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    
-    
+
 }
