@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cpd4414.assign2;
 
 import cpd4414.assign2.OrderQueue;
@@ -34,22 +33,22 @@ import org.junit.Test;
  * @author Len Payne <len.payne@lambtoncollege.ca>
  */
 public class OrderQueueTest {
-    
+
     public OrderQueueTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -63,14 +62,14 @@ public class OrderQueueTest {
         try {
             orderQueue.add(order);
         } catch (Exception ex) {
-            System.out.println("Exception: " +ex.getMessage());;
+            System.out.println("Exception: " + ex.getMessage());;
         }
-        
+
         long expResult = new Date().getTime();
         long result = order.getTimeReceived().getTime();
         assertTrue(Math.abs(result - expResult) < 1000);
     }
-    
+
     @Test
     public void testWhenNeitherCustomerExistsNorCustomerNameExistThenThrowException() {
         boolean check = false;
@@ -78,66 +77,62 @@ public class OrderQueueTest {
         Order order = new Order("", "");
         order.addPurchase(new Purchase(4, 10));
         order.addPurchase(new Purchase(6, 20));
-        try{
+        try {
             orderQueue.add(order);
-        }
-        catch(NoCustomerDetailsException ex){
+        } catch (NoCustomerDetailsException ex) {
             check = true;
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             check = false;
         }
-        
+
         assertTrue(check);
     }
-    
+
     @Test
     public void testWhenNewOrderArrivesWhenNoListOfPurchasesThenThrowException() {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        try{
+        try {
             orderQueue.add(order);
-        }
-        catch(NoPurchaseFoundException ex){
+        } catch (NoPurchaseFoundException ex) {
             check = true;
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             check = false;
         }
-        
+
         assertTrue(check);
     }
-    
+
     @Test
     public void testWhenNoOrdersThenReturnNull() {
         OrderQueue orderQueue = new OrderQueue();
         Order order = orderQueue.next();
         assertNull(order);
-        
+
     }
-    
+
     @Test
-    public void testWhenOrdersAvailableThenReturnOrderWithEarliestTimeReceived(){
+    public void testWhenOrdersAvailableThenReturnOrderWithEarliestTimeReceived() {
         try {
             OrderQueue orderQueue = new OrderQueue();
-            
+
             Order order1 = new Order("CUST00001", "ABC Construction");
             order1.addPurchase(new Purchase(4, 50));
             orderQueue.add(order1);
             Order order2 = new Order("CUST00002", "JJ Construction");
             order2.addPurchase(new Purchase(6, 20));
             orderQueue.add(order2);
-            
+
             Order order3 = orderQueue.next();
             assertEquals(order3, order1);
         } catch (Exception ex) {
-            System.out.println("Exception: " +ex.getMessage());
+            System.out.println("Exception: " + ex.getMessage());
         }
     }
-    
+
     @Test
-    public void testWhenOrderHasTimeReceivedAndAllOfPurchasesAreInStock(){
+    public void testWhenOrderHasTimeReceivedAndAllOfPurchasesAreInStock() {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
         order.addPurchase(new Purchase(2, 50));
@@ -145,18 +140,16 @@ public class OrderQueueTest {
         try {
             orderQueue.add(order);
             orderQueue.process();
-        } 
-        
-        catch (Exception ex) {
-            System.out.println("Some Other exception: " +ex.getMessage());
-        }  
+        } catch (Exception ex) {
+            System.out.println("Some Other exception: " + ex.getMessage());
+        }
         long expResult = new Date().getTime();
         long result = order.getTimeProcessed().getTime();
         assertTrue(Math.abs(result - expResult) < 1000);
     }
-    
+
     @Test
-    public void testWhenOrderDoesNotHaveTimeReceivedThenThrowException(){
+    public void testWhenOrderDoesNotHaveTimeReceivedThenThrowException() {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order1 = new Order("CUST00001", "ABC Construction");
@@ -165,24 +158,22 @@ public class OrderQueueTest {
             orderQueue.add(order1);
             //order1.setTimeReceived(null);
         } catch (Exception ex) {
-            System.out.println("Exception in adding order: " +ex.getMessage());
+            System.out.println("Exception in adding order: " + ex.getMessage());
         }
-        
+
         try {
             orderQueue.process();
-        } 
-        catch (NoTimeReceivedException ex){
+        } catch (NoTimeReceivedException ex) {
             check = true;
-            System.out.println("NO Time exception: " +ex.getMessage());
-        }
-        catch (Exception ex) {
-            System.out.println("Some Other exception: " +ex.getMessage());
+            System.out.println("NO Time exception: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Some Other exception: " + ex.getMessage());
         }
         assertTrue(check);
     }
-    
+
     @Test
-    public void testWhenOrderHasTimeProcessedTimeReceivedAndAllOfPurchasesInStockThenSetTimeFulfilled(){
+    public void testWhenOrderHasTimeProcessedTimeReceivedAndAllOfPurchasesInStockThenSetTimeFulfilled() {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00002", "JJ Construction");
         order.addPurchase(new Purchase(2, 50));
@@ -192,18 +183,16 @@ public class OrderQueueTest {
             orderQueue.process();
             orderQueue.fulfill();
 
-        } 
-        
-        catch (Exception ex) {
-            System.out.println("Some Other exception: " +ex.getMessage());
-        }  
+        } catch (Exception ex) {
+            System.out.println("Some Other exception: " + ex.getMessage());
+        }
         long expResult = new Date().getTime();
         long result = order.getTimeFulfilled().getTime();
         assertTrue(Math.abs(result - expResult) < 1000);
     }
-    
+
     @Test
-    public void testWhenOrderDoesNotHaveTimeProcessedThenThrowException(){
+    public void testWhenOrderDoesNotHaveTimeProcessedThenThrowException() {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
@@ -213,90 +202,85 @@ public class OrderQueueTest {
             orderQueue.add(order);
             orderQueue.process();
             orderQueue.fulfill();
-        } 
-        catch(NoTimeProcessedException ex){
+        } catch (NoTimeProcessedException ex) {
             check = true;
+        } catch (Exception ex) {
+            System.out.println("Some Other Exception: " + ex.getMessage());
         }
-        catch(Exception ex){
-            System.out.println("Some Other Exception: " +ex.getMessage());
-        }
-        
+
         assertTrue(check);
     }
-    
+
     @Test
-    public void testWhenOrderDoesNotHaveTimeReceivedForFulFillThenThrowException(){
+    public void testWhenOrderDoesNotHaveTimeReceivedForFulFillThenThrowException() {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
         order.addPurchase(new Purchase(2, 10));
-        
+
         try {
             orderQueue.add(order);
             orderQueue.process();
             orderQueue.fulfill();
-        } 
-        catch(NoTimeReceivedException ex){
+        } catch (NoTimeReceivedException ex) {
             check = true;
+        } catch (Exception ex) {
+            System.out.println("Some Other Exception: " + ex.getMessage());
         }
-        catch(Exception ex){
-            System.out.println("Some Other Exception: " +ex.getMessage());
-        }
-        
+
         assertTrue(check);
     }
-    
+
     @Test
-    public void testWhenThereAreNoOrdersThenReturnEmptyString(){
-        
+    public void testWhenThereAreNoOrdersThenReturnEmptyString() {
+
         OrderQueue orderQueue = new OrderQueue();
         String result = orderQueue.report();
         assertTrue(result.isEmpty());
-        
+
     }
-    
+
     @Test
-    public void testWhenThereAreOrdersThenReturnJSONObject(){
-            String expected = "{ \"orders\" : [\n" +
-                              " { \"customerId\" : \"CUST00001\",\n" +
-                                " \"customerName\" : \"ABC Construction\",\n" +
-                                " \"timeReceived\" : " +new Date().getTime()+ " ,\n" +
-                                " \"timeProcessed\" : " +new Date().getTime()+ " ,\n" +
-                                " \"timeFulfilled\" : " +new Date().getTime()+ " ,\n" +
-                                " \"purchases\" : [\n" +
-                                " { \"productId\" : \"PROD0004\", \"quantity\" : 10 }\n" +
-                                " ] \n" +
-                                " },\n" +
-                                " { \"customerId\" : \"CUST00002\",\n" +
-                                " \"customerName\" : \"JJ Construction\",\n" +
-                                " \"timeReceived\" : " +new Date().getTime()+ " ,\n" +
-                                " \"timeProcessed\" : \"\",\n" +
-                                " \"timeFulfilled\" : \"\",\n" +
-                                " \"purchases\" : [\n" +
-                                " { \"productId\" : \"PROD0003\", \"quantity\" : 20 },\n" +
-                                " { \"productId\" : \"PROD0002\", \"quantity\" : 10 }\n" +
-                                " ]\n" +
-                                " }\n" +
-                                "] }";
-            String result = "";
-            OrderQueue orderQueue = new OrderQueue();
-            Order order1 = new Order("CUST00001", "ABC Construction");
-            order1.addPurchase(new Purchase(1, 10));
-            Order order2 = new Order("CUST00002", "JJ Construction");
-            order2.addPurchase(new Purchase(3, 20));
-            order2.addPurchase(new Purchase(4, 10));
-            try {
-                orderQueue.add(order1);
-                orderQueue.process();
-                orderQueue.fulfill();
-                orderQueue.add(order2);
-            } 
-            catch(Exception ex){
-                System.out.println("Exception: " +ex.getMessage());
-            }
-            result = orderQueue.report();
-            assertEquals(expected, result);
-        
+    public void testWhenThereAreOrdersThenReturnJSONObject() {
+        String expected = "{ \"orders\" : [\n"
+                + " { \"customerId\" : \"CUST00001\",\n"
+                + " \"customerName\" : \"ABC Construction\",\n"
+                + " \"timeReceived\" : " + new Date().getTime() + " ,\n"
+                + " \"timeProcessed\" : " + new Date().getTime() + " ,\n"
+                + " \"timeFulfilled\" : " + new Date().getTime() + " ,\n"
+                + " \"purchases\" : [\n"
+                + " { \"productId\" : \"PROD0004\", \"quantity\" : 10 }\n"
+                + " ] \n"
+                + " },\n"
+                + " { \"customerId\" : \"CUST00002\",\n"
+                + " \"customerName\" : \"JJ Construction\",\n"
+                + " \"timeReceived\" : " + new Date().getTime() + " ,\n"
+                + " \"timeProcessed\" : \"\",\n"
+                + " \"timeFulfilled\" : \"\",\n"
+                + " \"purchases\" : [\n"
+                + " { \"productId\" : \"PROD0003\", \"quantity\" : 20 },\n"
+                + " { \"productId\" : \"PROD0002\", \"quantity\" : 10 }\n"
+                + " ]\n"
+                + " }\n"
+                + "] }";
+        String result = "";
+        OrderQueue orderQueue = new OrderQueue();
+        Order order1 = new Order("CUST00001", "ABC Construction");
+        order1.addPurchase(new Purchase(1, 10));
+        Order order2 = new Order("CUST00002", "JJ Construction");
+        order2.addPurchase(new Purchase(3, 20));
+        order2.addPurchase(new Purchase(4, 10));
+        try {
+            orderQueue.add(order1);
+            orderQueue.process();
+            orderQueue.fulfill();
+            orderQueue.add(order2);
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        result = orderQueue.report();
+        assertEquals(expected, result);
+
     }
-    
+
 }
