@@ -72,4 +72,9 @@ public class OrderQueue {
         }
         
     }
+    
+    public String report(){
+        return null;
+        
+    }
 }

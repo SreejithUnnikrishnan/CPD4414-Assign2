@@ -183,7 +183,23 @@ public class OrderQueueTest {
     
     @Test
     public void testWhenOrderHasTimeProcessedTimeReceivedAndAllOfPurchasesInStockThenSetTimeFulfilled(){
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00002", "JJ Construction");
+        order.addPurchase(new Purchase("PROD0002", 50));
+        order.addPurchase(new Purchase("PROD0006", 20));
+        try {
+            orderQueue.add(order);
+            orderQueue.process();
+            orderQueue.fulfill();
+
+        } 
         
+        catch (Exception ex) {
+            System.out.println("Some Other exception: " +ex.getMessage());
+        }  
+        long expResult = new Date().getTime();
+        long result = order.getTimeFulfilled().getTime();
+        assertTrue(Math.abs(result - expResult) < 1000);
     }
     
     @Test
@@ -230,6 +246,34 @@ public class OrderQueueTest {
         assertTrue(check);
     }
     
+    @Test
+    public void testWhenThereAreNoOrdersThenReturnEmptyString(){
+        
+        OrderQueue orderQueue = new OrderQueue();
+        String result = orderQueue.report();
+        assertTrue(result.isEmpty());
+        
+    }
     
+    @Test
+    public void testWhenThereAreOrdersThenReturnJSONObject(){
+            String expected = "{ \"orders\" : [\n" +
+                              " { \"customerId\" : \"CUST00001\",\n" +
+                              " \"customerName\" : \"ABC Construction\",\n" +
+                              " \"timeReceived\" : " +new Date().getTime()+",\n" +
+                                " \"timeProcessed\" : " +new Date().getTime()+",\n" +
+                                " \"timeFulfilled\" : " +new Date().getTime()+",\n" +
+                                " \"purchases\" : [\n" +
+                                " { \"productId\" : \"PROD0004\", \"quantity\" : 10 }\n" +
+                                " ],\n" +
+                                "] }";
+            String result = "";
+            OrderQueue orderQueue = new OrderQueue();
+            Order order = new Order("CUST00001", "ABC Construction");
+            order.addPurchase(new Purchase("PROD0004", 10));
+            result = orderQueue.report();
+            assertEquals(expected, result);
+        
+    }
     
 }
