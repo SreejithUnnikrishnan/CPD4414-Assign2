@@ -16,6 +16,8 @@
 
 package cpd4414.assign2;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +32,7 @@ public class OrderQueue {
     Queue<Order> orderQueue = new ArrayDeque<>();
     List<Order> orderList = new ArrayList<>();
     List<Order> fulfillList = new ArrayList<>();
+    
     
     public void add(Order order) throws Exception {
         if(order.getCustomerId().isEmpty() || order.getCustomerName().isEmpty() ){
@@ -62,6 +65,7 @@ public class OrderQueue {
     
     public void fulfill() throws Exception{
         Order order = orderList.remove(0);
+        
         if(order.getTimeReceived().equals(null)){
             throw new NoTimeReceivedException(); 
         }

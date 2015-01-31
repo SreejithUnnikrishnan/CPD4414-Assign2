@@ -58,8 +58,8 @@ public class OrderQueueTest {
     public void testWhenCustomerExistsAndPurchasesExistThenTimeReceivedIsNow() {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        order.addPurchase(new Purchase("PROD0004", 50));
-        order.addPurchase(new Purchase("PROD0006", 40));
+        order.addPurchase(new Purchase(4, 50));
+        order.addPurchase(new Purchase(6, 40));
         try {
             orderQueue.add(order);
         } catch (Exception ex) {
@@ -76,8 +76,8 @@ public class OrderQueueTest {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("", "");
-        order.addPurchase(new Purchase("PROD0004", 10));
-        order.addPurchase(new Purchase("PROD0006", 20));
+        order.addPurchase(new Purchase(4, 10));
+        order.addPurchase(new Purchase(6, 20));
         try{
             orderQueue.add(order);
         }
@@ -123,10 +123,10 @@ public class OrderQueueTest {
             OrderQueue orderQueue = new OrderQueue();
             
             Order order1 = new Order("CUST00001", "ABC Construction");
-            order1.addPurchase(new Purchase("PROD0004", 50));
+            order1.addPurchase(new Purchase(4, 50));
             orderQueue.add(order1);
             Order order2 = new Order("CUST00002", "JJ Construction");
-            order2.addPurchase(new Purchase("PROD0006", 20));
+            order2.addPurchase(new Purchase(6, 20));
             orderQueue.add(order2);
             
             Order order3 = orderQueue.next();
@@ -140,8 +140,8 @@ public class OrderQueueTest {
     public void testWhenOrderHasTimeReceivedAndAllOfPurchasesAreInStock(){
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        order.addPurchase(new Purchase("PROD0002", 50));
-        order.addPurchase(new Purchase("PROD0006", 20));
+        order.addPurchase(new Purchase(2, 50));
+        order.addPurchase(new Purchase(6, 20));
         try {
             orderQueue.add(order);
             orderQueue.process();
@@ -160,7 +160,7 @@ public class OrderQueueTest {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order1 = new Order("CUST00001", "ABC Construction");
-        order1.addPurchase(new Purchase("PROD0004", 40));
+        order1.addPurchase(new Purchase(4, 40));
         try {
             orderQueue.add(order1);
             //order1.setTimeReceived(null);
@@ -185,8 +185,8 @@ public class OrderQueueTest {
     public void testWhenOrderHasTimeProcessedTimeReceivedAndAllOfPurchasesInStockThenSetTimeFulfilled(){
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00002", "JJ Construction");
-        order.addPurchase(new Purchase("PROD0002", 50));
-        order.addPurchase(new Purchase("PROD0006", 20));
+        order.addPurchase(new Purchase(2, 50));
+        order.addPurchase(new Purchase(6, 20));
         try {
             orderQueue.add(order);
             orderQueue.process();
@@ -207,8 +207,8 @@ public class OrderQueueTest {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        order.addPurchase(new Purchase("PROD0004", 10));
-        order.addPurchase(new Purchase("PROD0006", 30));
+        order.addPurchase(new Purchase(4, 10));
+        order.addPurchase(new Purchase(6, 30));
         try {
             orderQueue.add(order);
             orderQueue.process();
@@ -229,7 +229,7 @@ public class OrderQueueTest {
         boolean check = false;
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        order.addPurchase(new Purchase("PROD0002", 10));
+        order.addPurchase(new Purchase(2, 10));
         
         try {
             orderQueue.add(order);
@@ -281,10 +281,10 @@ public class OrderQueueTest {
             String result = "";
             OrderQueue orderQueue = new OrderQueue();
             Order order1 = new Order("CUST00001", "ABC Construction");
-            order1.addPurchase(new Purchase("PROD0004", 10));
+            order1.addPurchase(new Purchase(1, 10));
             Order order2 = new Order("CUST00002", "JJ Construction");
-            order2.addPurchase(new Purchase("PROD0003", 20));
-            order2.addPurchase(new Purchase("PROD0004", 10));
+            order2.addPurchase(new Purchase(3, 20));
+            order2.addPurchase(new Purchase(4, 10));
             try {
                 orderQueue.add(order1);
                 orderQueue.process();
